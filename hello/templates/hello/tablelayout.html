@@ -1,0 +1,65 @@
+{% extends "hello/layout.html" %}
+{% block title %}
+Table view
+{% endblock %}
+{% block content %}
+
+<p> Data set {{csv_name}} </p>
+<div class="container">
+    
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Birth year</th>
+                <th>Homeworld</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if d %}
+            {% for i in d %}
+            <tr>
+                <td>{{i.index}}</td>
+                <td>{{i.name}}</td>
+                <td>{{i.birth_year}}</td>
+                <td>{{i.homeworld}}</td>
+                <td>{{i.date}}</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+<!--{{row_number}} to display -->
+
+<p>
+    <button><a href="http://127.0.0.1:8000/showMore/{{csv_name}}/{{row_number}}">Load more</a></button>
+</p>
+
+<!--NOTE change checkboxes to normal buttons-->
+
+<form method="post" action=/ValueCounts>
+    {% csrf_token %}
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="name" id="name" name="columns">
+        <label class="form-check-label" for="name">Name</label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="birth_year" id="birth_year" name="columns">
+        <label class="form-check-label" for="birth_year">Birth year</label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="homeworld" id="homeworld" name="columns">
+        <label class="form-check-label" for="homeworld">Homeworld</label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="date" id="date" name="columns">
+        <label class="form-check-label" for="date">Date</label>
+    </div>
+    <button type="submit" formaction="http://127.0.0.1:8000/tableValCan/{{csv_name}}/{{row_number}}">Submit to Value Counts</button>
+</form>
+
+<p></p>
+{% endblock %}

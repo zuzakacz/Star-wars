@@ -1,0 +1,34 @@
+{% extends "hello/layout.html" %}
+{% block title %}
+Home Star Wars
+{% endblock %}
+{% block content %}
+<h2>Collections <button type="button" onclick="location.href='{% url 'fetch' %}'" name='mybtn2'>Fetch</button>
+</h2>
+
+{% if loads_list %}
+<table class="loads_list">
+    <thead>
+        <tr>
+            <th>Available datasets</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        {% for singleDownload in loads_list %}
+       
+        <tr>
+            <td>
+                <a href="tablelayout/{{ singleDownload.file_name }}/10">{{ singleDownload.date }}</a>
+
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No data have been fetched so far. Use the <a href="{% url 'fetch' %}">Fetch</a> button to download the data.</p>
+{% endif %}
+
+
+{% endblock %}
